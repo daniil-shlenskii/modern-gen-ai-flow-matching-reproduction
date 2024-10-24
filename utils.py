@@ -1,3 +1,7 @@
+from typing import Callable, Literal
+
+import torch
+
 import numpy as np
 from numpy import sin
 
@@ -36,3 +40,31 @@ def generate_checkerboard_dataset(num_points, bound, num_cells):
     y[:,0] *= -1
     res = np.vstack((res, y))
     return res
+
+
+def rademacher_sample_like(x: torch.Tensor):
+    rand = ((torch.rand_like(x) < 0.5)) * 2 - 1
+    return rand
+
+def divergence(
+    func: Callable,
+    inputs: torch.Tensor,
+    n_samples: int = 1,
+    sample_distr_name: Literal["rademacher", "normal"] = "rademacher",
+) -> torch.Tensor:
+    sample_fn = {
+        "rademacher": rademacher_sample_like,
+        "normal": torch.randn_like
+    }[sample_distr_name]
+
+    div = 0
+    for _ in range(n_samples):
+        _inputs = inputs.clone()
+        _inputs.requires_grad_(True)
+        outputs = func(_inputs)
+        eps = sample_fn(_inputs)
+        vp = torch.autograd.grad(
+            outputs=outputs, inputs=_inputs, grad_outputs=eps
+        )[0]
+        div += (eps * vp).flatten(1).sum(-1) / n_samples
+    return div
