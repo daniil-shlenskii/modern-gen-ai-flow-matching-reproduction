@@ -5,6 +5,13 @@ from numpy import sin
 def generate_checkerboard_dataset(num_points, bound, num_cells):
     """
     Generates a checkerboard.
+
+    Example usage::
+
+        >>> import matplotlib.pyplot as plt
+        >>> x = generate_checkerboard_dataset(num_points=1000, bound=10, num_cells=4)
+        >>> plt.scatter(x[:,0], x[:,1], s=1)
+        >>> plt.show()
     
     Parameters
     ----------
@@ -29,7 +36,3 @@ def generate_checkerboard_dataset(num_points, bound, num_cells):
     y[:,0] *= -1
     res = np.vstack((res, y))
     return res
-
-# x = generate_checkerboard_dataset(num_points=1000, bound=10, num_cells=4)
-# plt.scatter(x[:,0], x[:,1], s=1)
-# plt.show()
