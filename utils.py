@@ -5,6 +5,9 @@ import torch
 import numpy as np
 from numpy import sin
 
+from sklearn.datasets import make_swiss_roll
+from sklearn.utils import shuffle
+
 
 def generate_checkerboard_dataset(num_points, bound, num_cells):
     """
@@ -41,6 +44,19 @@ def generate_checkerboard_dataset(num_points, bound, num_cells):
     res = np.vstack((res, y))
     return res
 
+def generate_swiss_dataset(num_samples):
+    X0, _ = make_swiss_roll(num_samples // 2, noise=0.2, random_state=0)
+    X1, _ = make_swiss_roll(num_samples // 2, noise=0.2, random_state=0)
+    X0 = X0[:, [0, 2]]
+    X1 = X1[:, [0, 2]]
+    X1 = -X1
+    X, y = shuffle(
+        np.concatenate([X0, X1], axis=0),
+        np.concatenate([np.zeros(len(X0)), np.ones(len(X1))], axis=0),
+        random_state=0
+    )
+    X = (X - X.mean(axis=0)) / X.std(axis=0)
+    return X
 
 def rademacher_sample_like(x: torch.Tensor):
     rand = ((torch.rand_like(x) < 0.5)) * 2 - 1
