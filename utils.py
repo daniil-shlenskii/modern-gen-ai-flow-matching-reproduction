@@ -47,9 +47,8 @@ def rademacher_sample_like(x: torch.Tensor):
     return rand
 
 def divergence(
-    func: Callable,
+    outputs: torch.Tensor,
     inputs: torch.Tensor,
-    n_samples: int = 1,
     sample_distr_name: Literal["rademacher", "normal"] = "rademacher",
 ) -> torch.Tensor:
     sample_fn = {
@@ -57,14 +56,8 @@ def divergence(
         "normal": torch.randn_like
     }[sample_distr_name]
 
-    div = 0
-    for _ in range(n_samples):
-        _inputs = inputs.clone()
-        _inputs.requires_grad_(True)
-        outputs = func(_inputs)
-        eps = sample_fn(_inputs)
-        vp = torch.autograd.grad(
-            outputs=outputs, inputs=_inputs, grad_outputs=eps
-        )[0]
-        div += (eps * vp).flatten(1).sum(-1) / n_samples
-    return div
+    eps = sample_fn(inputs)
+    vp = torch.autograd.grad(
+        outputs=outputs, inputs=inputs, grad_outputs=eps
+    )[0]
+    return (eps * vp).flatten(1).sum(-1)
