@@ -30,6 +30,57 @@ Where $v_\theta(x_t, t)$ represents the learned flow vector field, and $u(x_t, t
 
 We compared our reproduction to the paper's original results, including checkerboard visualizations to showcase model performance.
 
+## Reproduce
+
+
+### Setup
+To get started, clone this repository and ensure you have the necessary dependencies installed:
+
+```bash
+git clone https://github.com/your_username/your_repository.git
+cd your_repository
+pip install -r requirements.txt
+```
+
+### Configuration
+
+Create a YAML configuration file (e.g., config.yaml) to specify all training parameters. Below is an example of a configuration file:
+
+```yaml
+# Example config.yaml
+img_size: 256                  # Size of input images
+in_channels: 3                 # Number of input channels (e.g., 3 for RGB images)
+dataloader: 'path_to_dataloader' # Path to your custom dataloader
+mode: 'train'                  # Mode (e.g., 'train', 'test', etc.)
+timesteps: 1000                # Number of timesteps for training
+device: 'cuda'                 # Device to use ('cpu' or 'cuda')
+num_epochs: 50                 # Number of training epochs
+lr: 0.001                      # Learning rate
+save_path: 'path_to_save_model' # Path to save the trained model
+```
+
+### Training
+
+To initiate the training process, use the following command with your configuration file:
+
+```bash
+python scripts/train.py --config path_to_your_config.yaml
+```
+Make sure the config.yaml file is correctly set up and all paths are valid.
+
+### Usage Example
+Here's a quick example to demonstrate how to train a model using a sample configuration file:
+
+1. Create configs/sample_config.yaml with the parameters you need.
+2. Run the training script:
+  ```bash
+  python scripts/train.py --config configs/sample_config.yaml
+  ```
+3. The model will train according to the parameters provided in the configuration file and save the results to the specified save_path.
+
+
+
+
 ## Team Contributions
 
 - **Alexander Sharashvin**: Data collection and method evaluation
