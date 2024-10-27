@@ -3,8 +3,8 @@ import yaml
 
 import torch
 import numpy as np
-from forward import Diffusion, generate_fm
-from unet_model import CustomUNet2DModel
+from src.models.forward import Diffusion, generate_fm
+from src.models.unet_model import CustomUNet2DModel
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Training script")
