@@ -5,9 +5,9 @@ import torch
 import torch.optim as optim
 import torch.nn.functional as F
 
-from forward import Diffusion
-from unet_model import CustomUNet2DModel
-from cfm import OptimalTransportConditionalFlowMatcher, VariancePreservingConditionalFlowMatcher
+from src.models.forward import Diffusion
+from src.models.unet_model import CustomUNet2DModel
+from src.models.cfm import OptimalTransportConditionalFlowMatcher, VariancePreservingConditionalFlowMatcher
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Training script")

@@ -1,7 +1,7 @@
 import math
 import torch
 
-from optimal_transport import OTPlanSampler
+from src.utils.optimal_transport import OTPlanSampler
 
 class ConditionalFlowMatcher:
     def __init__(self, sigma: float = 0.0):
