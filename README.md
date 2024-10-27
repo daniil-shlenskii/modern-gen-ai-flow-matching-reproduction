@@ -37,9 +37,8 @@ We compared our reproduction to the paper's original results, including checkerb
 To get started, clone this repository and ensure you have the necessary dependencies installed:
 
 ```bash
-git clone https://github.com/your_username/your_repository.git
-cd your_repository
-pip install -r requirements.txt
+git clone https://github.com/daniil-shlenskii/modern-gen-ai-flow-matching-reproduction.git
+cd modern-gen-ai-flow-matching-reproduction
 ```
 
 ### Configuration
